@@ -64,3 +64,18 @@ void Add_pipe(Pipe& p)
 	p.sign = true;
 	cout << "\n";
 }
+void Add_cs(CS& c)
+{
+	cout << "Добавление КС" << endl;
+	cout << "Введите название: ";
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
+	getline(cin, c.name);
+	cout << "Введите количество цехов: ";
+	c.number_workshop = GetCorrectNumber(0, INT_MAX);
+	cout << "Введите количество цехов в работе: ";
+	c.in_work = GetCorrectNumber(0, c.number_workshop);
+	cout << "Введите эффективность (от 0 до 1): ";
+	c.effectiveness = GetCorrectNumber(0.0, 1.0);
+	cout << "\n";
+}
