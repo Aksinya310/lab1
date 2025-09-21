@@ -50,6 +50,8 @@ int menu()
 	}
 	return number;
 }
+
+
 void Add_pipe(Pipe& p)
 {
 	cout << "Добавление трубы" << endl;
@@ -165,4 +167,144 @@ void View(Pipe& p, CS& c)
 		cout << "Нет трубы и КС" << endl;
 		cout << "\n";
 	}
+}
+
+
+void Edit_pipe(Pipe& p)
+{
+	if (p.name.size() != 0)
+	{
+		cout << "Редактирование трубы" << endl;
+		cout << "Введите признак 'в ремонте'  (0 - в ремонте, 1 - не в ремонте): " << endl;
+		p.sign = GetCorrectNumber(0, 1);
+		cout << "\n";
+	}
+	else
+	{
+		cout << "Добавьте трубy" << endl;
+		cout << "\n";
+	}
+}
+
+void Edit_cs(CS& c)
+{
+	if (c.name.size() != 0)
+	{
+		cout << "Редактирование КС" << endl;
+		cout << "Введите количество цехов в работе: " << endl;
+		c.in_work = GetCorrectNumber(0, c.number_workshop);
+		cout << "Введите эффективность (от 0 до 1): " << endl;
+		c.effectiveness = GetCorrectNumber(0, 1);
+		cout << "\n";
+	}
+	else
+	{
+		cout << "Добавьте КС" << endl;
+		cout << "\n";
+	}
+}
+
+void Save(const Pipe& p, const CS& c)
+{
+	if ((p.name.size() != 0) || (c.name.size() != 0))
+	{
+		ofstream file("data.txt");
+		if (p.name.size() != 0) {
+			if (file.is_open()) {
+				file << "Pipe" << endl;
+				file << p.name << endl;
+				file << p.length << endl;
+				file << p.diameter << endl;
+				file << p.sign << endl;
+
+			}
+			else {
+				cout << "Не удалось открыть файл" << endl;
+			}
+		}
+		if (c.name.size() != 0) {
+			if (file.is_open()) {
+				file << "CS" << endl;
+				file << c.name << endl;
+				file << c.number_workshop << endl;
+				file << c.in_work << endl;
+				file << c.effectiveness << endl;
+
+			}
+			else {
+				cout << "Не удалось открыть файл" << endl;
+			}
+		}
+		if ((p.name.size() == 0) && (c.name.size() == 0)) {
+			cout << "Добавьте трубу или КС" << endl;
+		}
+		else {
+			if ((p.name.size() != 0) && (c.name.size() != 0))
+			{
+				cout << "Данные трубы и КС сохранены" << endl;
+			}
+			else if (p.name.size() != 0)
+			{
+				cout << "Данные трубы сохранены" << endl;
+			}
+			else
+			{
+				cout << "Данные КС сохранены" << endl;
+			}
+		}
+		file.close();
+	}
+	else
+	{
+		cout << "Добавьте трубу или КС" << endl;
+		cout << "\n";
+	}
+}
+
+void Load(Pipe& p, CS& c)
+{
+	string line;
+	ifstream file("data.txt");
+	if (file.is_open()) {
+		getline(file, line);
+		if (line == "Pipe") {
+			getline(file, p.name);
+			getline(file, line);
+			p.length = stod(line);
+			getline(file, line);
+			p.diameter = stod(line);
+			getline(file, line);
+			p.sign = stoi(line);
+			getline(file, line);
+			cout << "Данные трубы загрузились" << endl;
+			if (line == "CS") {
+				getline(file, c.name);
+				getline(file, line);
+				c.number_workshop = stoi(line);
+				getline(file, line);
+				c.in_work = stoi(line);
+				getline(file, line);
+				c.effectiveness = stoi(line);
+				cout << "Данные КС загрузились" << endl;
+			}
+		}
+		else if (line == "CS") {
+			getline(file, c.name);
+			getline(file, line);
+			c.number_workshop = stoi(line);
+			getline(file, line);
+			c.in_work = stoi(line);
+			getline(file, line);
+			c.effectiveness = stod(line);
+			cout << "Данные КС загрузились" << endl;
+		}
+		else {
+			cout << "Файл пуст" << endl;
+		}
+	}
+	else {
+		cout << "Не удалось открыть файл" << endl;
+	}
+	file.close();
+
 }
