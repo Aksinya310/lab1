@@ -50,3 +50,17 @@ int menu()
 	}
 	return number;
 }
+void Add_pipe(Pipe& p)
+{
+	cout << "Добавление трубы" << endl;
+	cout << "Введите название: ";
+	cin.clear();
+	cin.ignore(INT_MAX, '\n');
+	getline(cin, p.name);
+	cout << "Введите длину: ";
+	p.length = GetCorrectNumber(0.0, DBL_MAX);
+	cout << "Введите диаметр: ";
+	p.diameter = GetCorrectNumber(0.0, DBL_MAX);
+	p.sign = true;
+	cout << "\n";
+}
