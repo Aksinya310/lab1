@@ -6,7 +6,7 @@ using namespace std;
 
 struct Pipe
 {
-	string name;
+	string name1;
 	double length;
 	double diameter;
 	bool sign;
@@ -14,11 +14,12 @@ struct Pipe
 
 struct CS
 {
-	string name; 
+	string name2;
 	int number_workshop;
 	int in_work;
 	double effectiveness;
-}; 
+};
+
 template <typename T>
 T GetCorrectNumber(T min, T max) {
 	int x;
@@ -29,6 +30,7 @@ T GetCorrectNumber(T min, T max) {
 	}
 	return x;
 }
+
 int menu()
 {
 	int number;
@@ -51,14 +53,13 @@ int menu()
 	return number;
 }
 
-
 void Add_pipe(Pipe& p)
 {
 	cout << "Добавление трубы" << endl;
 	cout << "Введите название: ";
 	cin.clear();
 	cin.ignore(INT_MAX, '\n');
-	getline(cin, p.name);
+	getline(cin, p.name1);
 	cout << "Введите длину: ";
 	p.length = GetCorrectNumber(0.0, DBL_MAX);
 	cout << "Введите диаметр: ";
@@ -66,28 +67,14 @@ void Add_pipe(Pipe& p)
 	p.sign = true;
 	cout << "\n";
 }
+
 void Add_cs(CS& c)
 {
 	cout << "Добавление КС" << endl;
 	cout << "Введите название: ";
 	cin.clear();
 	cin.ignore(INT_MAX, '\n');
-	getline(cin, c.name);
-	cout << "Введите количество цехов: ";
-	c.number_workshop = GetCorrectNumber(0, INT_MAX);
-	cout << "Введите количество цехов в работе: ";
-	c.in_work = GetCorrectNumber(0, c.number_workshop);
-	cout << "Введите эффективность (от 0 до 1): ";
-	c.effectiveness = GetCorrectNumber(0.0, 1.0);
-	cout << "\n";
-}
-void Add_cs(CS& c)
-{
-	cout << "Добавление КС" << endl;
-	cout << "Введите название: ";
-	cin.clear();
-	cin.ignore(INT_MAX, '\n');
-	getline(cin, c.name);
+	getline(cin, c.name2);
 	cout << "Введите количество цехов: ";
 	c.number_workshop = GetCorrectNumber(0, INT_MAX);
 	cout << "Введите количество цехов в работе: ";
@@ -101,7 +88,7 @@ void View_pipe(Pipe& p)
 {
 	cout << "Просмотр трубы" << endl;
 	cout << "Труба" << endl;
-	cout << "Название: " << p.name << endl;
+	cout << "Название: " << p.name1 << endl;
 	cout << "Длина: " << p.length << endl;
 	cout << "Диаметр: " << p.diameter << endl;
 	cout << "Признак 'в ремонте' (0 - в ремонте, 1 - не в ремонте): " << p.sign << endl;
@@ -111,7 +98,7 @@ void View_cs(CS& c)
 {
 	cout << "Просмотр КС" << endl;
 	cout << "КС" << endl;
-	cout << "Название: " << c.name << endl;
+	cout << "Название: " << c.name2 << endl;
 	cout << "Количество цехов: " << c.number_workshop << endl;
 	cout << "Количество цехов в работе: " << c.in_work << endl;
 	cout << "Эффективность (от 0 до 1): " << c.effectiveness << endl;
@@ -119,7 +106,7 @@ void View_cs(CS& c)
 }
 void View(Pipe& p, CS& c)
 {
-	if ((p.name.size() != 0) || (c.name.size() != 0))
+	if ((p.name1.size() != 0) || (c.name2.size() != 0))
 	{
 		int number;
 		while (true)
@@ -133,7 +120,7 @@ void View(Pipe& p, CS& c)
 			switch (number)
 			{
 			case 1:
-				if (p.name.size() != 0)
+				if (p.name1.size() != 0)
 				{
 					View_pipe(p);
 				}
@@ -145,7 +132,7 @@ void View(Pipe& p, CS& c)
 				}
 				break;
 			case 2:
-				if (c.name.size() != 0)
+				if (c.name2.size() != 0)
 				{
 					View_cs(c);
 				}
@@ -169,10 +156,9 @@ void View(Pipe& p, CS& c)
 	}
 }
 
-
 void Edit_pipe(Pipe& p)
 {
-	if (p.name.size() != 0)
+	if (p.name1.size() != 0)
 	{
 		cout << "Редактирование трубы" << endl;
 		cout << "Введите признак 'в ремонте'  (0 - в ремонте, 1 - не в ремонте): " << endl;
@@ -188,7 +174,7 @@ void Edit_pipe(Pipe& p)
 
 void Edit_cs(CS& c)
 {
-	if (c.name.size() != 0)
+	if (c.name2.size() != 0)
 	{
 		cout << "Редактирование КС" << endl;
 		cout << "Введите количество цехов в работе: " << endl;
@@ -206,13 +192,13 @@ void Edit_cs(CS& c)
 
 void Save(const Pipe& p, const CS& c)
 {
-	if ((p.name.size() != 0) || (c.name.size() != 0))
+	if ((p.name1.size() != 0) || (c.name2.size() != 0))
 	{
 		ofstream file("data.txt");
-		if (p.name.size() != 0) {
+		if (p.name1.size() != 0) {
 			if (file.is_open()) {
 				file << "Pipe" << endl;
-				file << p.name << endl;
+				file << p.name1 << endl;
 				file << p.length << endl;
 				file << p.diameter << endl;
 				file << p.sign << endl;
@@ -222,10 +208,10 @@ void Save(const Pipe& p, const CS& c)
 				cout << "Не удалось открыть файл" << endl;
 			}
 		}
-		if (c.name.size() != 0) {
+		if (c.name2.size() != 0) {
 			if (file.is_open()) {
 				file << "CS" << endl;
-				file << c.name << endl;
+				file << c.name2 << endl;
 				file << c.number_workshop << endl;
 				file << c.in_work << endl;
 				file << c.effectiveness << endl;
@@ -235,15 +221,15 @@ void Save(const Pipe& p, const CS& c)
 				cout << "Не удалось открыть файл" << endl;
 			}
 		}
-		if ((p.name.size() == 0) && (c.name.size() == 0)) {
+		if ((p.name1.size() == 0) && (c.name2.size() == 0)) {
 			cout << "Добавьте трубу или КС" << endl;
 		}
 		else {
-			if ((p.name.size() != 0) && (c.name.size() != 0))
+			if ((p.name1.size() != 0) && (c.name2.size() != 0))
 			{
 				cout << "Данные трубы и КС сохранены" << endl;
 			}
-			else if (p.name.size() != 0)
+			else if (p.name1.size() != 0)
 			{
 				cout << "Данные трубы сохранены" << endl;
 			}
@@ -268,7 +254,7 @@ void Load(Pipe& p, CS& c)
 	if (file.is_open()) {
 		getline(file, line);
 		if (line == "Pipe") {
-			getline(file, p.name);
+			getline(file, p.name1);
 			getline(file, line);
 			p.length = stod(line);
 			getline(file, line);
@@ -278,7 +264,7 @@ void Load(Pipe& p, CS& c)
 			getline(file, line);
 			cout << "Данные трубы загрузились" << endl;
 			if (line == "CS") {
-				getline(file, c.name);
+				getline(file, c.name2);
 				getline(file, line);
 				c.number_workshop = stoi(line);
 				getline(file, line);
@@ -289,7 +275,7 @@ void Load(Pipe& p, CS& c)
 			}
 		}
 		else if (line == "CS") {
-			getline(file, c.name);
+			getline(file, c.name2);
 			getline(file, line);
 			c.number_workshop = stoi(line);
 			getline(file, line);
@@ -308,7 +294,6 @@ void Load(Pipe& p, CS& c)
 	file.close();
 
 }
-
 int main()
 {
 	setlocale(LC_ALL, "RUS");
