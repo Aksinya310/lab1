@@ -18,4 +18,4 @@ struct CS
 	int number_workshop;
 	int in_work;
 	double effectiveness;
-};
+}; 
