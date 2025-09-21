@@ -308,3 +308,46 @@ void Load(Pipe& p, CS& c)
 	file.close();
 
 }
+
+int main()
+{
+	setlocale(LC_ALL, "RUS");
+	Pipe pipe;
+	CS cs;
+	while (true)
+	{
+		int number = menu();
+		switch (number)
+		{
+		case 1:
+			Add_pipe(pipe);
+			break;
+		case 2:
+			Add_cs(cs);
+			break;
+		case 3:
+			View(pipe, cs);
+			break;
+		case 4:
+			Edit_pipe(pipe);
+			break;
+		case 5:
+			Edit_cs(cs);
+			break;
+		case 6:
+			Save(pipe, cs);
+			break;
+		case 7:
+			Load(pipe, cs);
+			break;
+		case 0:
+			cout << "Пока!";
+			cout << "\n";
+			return 0;
+		default:
+			cout << "Неверный ввод";
+			cout << "\n";
+			break;
+		}
+	}
+}
